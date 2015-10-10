@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>在linux下利用wine运行RTX - 永不岛</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="环境：fedora 15 / Wine
+tips：在fedora上安装wine很简单。只需要打开终端，输入wine然后回车。系统就会问你是否安装wine软件包以便提供此命令。选择yes就好了。对于大多数的常用软件，在fedora下都可已用这种方法安装。也可以利用  yum install wine命令来安装（在root用户下）。
+步骤：
+
+打开终端，依次运行下列命令（某些命令可能需要root权限">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在linux下利用wine运行RTX">
+<meta property="og:url" content="http://puzzlex.github.io/2011/10/23/linux-wine-rtx/index.html">
+<meta property="og:site_name" content="永不岛">
+<meta property="og:description" content="环境：fedora 15 / Wine
+tips：在fedora上安装wine很简单。只需要打开终端，输入wine然后回车。系统就会问你是否安装wine软件包以便提供此命令。选择yes就好了。对于大多数的常用软件，在fedora下都可已用这种方法安装。也可以利用  yum install wine命令来安装（在root用户下）。
+步骤：
+
+打开终端，依次运行下列命令（某些命令可能需要root权限">
+<meta property="og:updated_time" content="2015-10-10T10:13:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在linux下利用wine运行RTX">
+<meta name="twitter:description" content="环境：fedora 15 / Wine
+tips：在fedora上安装wine很简单。只需要打开终端，输入wine然后回车。系统就会问你是否安装wine软件包以便提供此命令。选择yes就好了。对于大多数的常用软件，在fedora下都可已用这种方法安装。也可以利用  yum install wine命令来安装（在root用户下）。
+步骤：
+
+打开终端，依次运行下列命令（某些命令可能需要root权限">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">存档</a>
+        
+          <a class="main-nav-link" href="/tags">标签</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://puzzlex.github.io"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-linux-wine-rtx" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      在linux下利用wine运行RTX
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2011/10/23/linux-wine-rtx/" class="article-date">
+  <time datetime="2011-10-22T16:00:00.000Z" itemprop="datePublished">2011-10-23</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>环境：fedora 15 / Wine</p>
+<p>tips：在fedora上安装wine很简单。只需要打开终端，输入wine然后回车。系统就会问你是否安装wine软件包以便提供此命令。选择yes就好了。对于大多数的常用软件，在fedora下都可已用这种方法安装。也可以利用  yum install wine命令来安装（在root用户下）。</p>
+<p><strong>步骤：</strong></p>
+<ol>
+<li><p>打开终端，依次运行下列命令（某些命令可能需要root权限<a id="more"></a>）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install wine</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>去<a href="http://wiki.winehq.org/winetricks" target="_blank">这里</a>下载一个名为winetricks的脚本，这个脚本主要是帮助下载一些wine中常用的加载项。</p>
+</li>
+<li><p>运行如下命令： <code>sh winetricks msxml3 gdiplus riched20 vcrun6 vcrun2005sp1  vb6run</code> 。这个命令下载rtx需要的一些加载项。其中msxml3无法下载，请在网上搜索msxml3，放对cache（.cache/winetricks/mscml3/） 目录下。其他的类似。你可以根据脚本的提示进行操作。</p>
+</li>
+<li><p>去腾讯的官网下载RTX的安装包。</p>
+</li>
+<li><p>运行 <code>wine rtxclient2010formal.exe</code> 命令</p>
+</li>
+<li><p>从xp系统里拷贝一份宋体字体到 <code>~/.wine/drive_c/windows/Fonts/</code> 文件夹下。这个可以解决rtx无法显示中文问题</p>
+</li>
+<li><p>建立一个init.reg文件，文件内容为：</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">REGEDIT4</span><br><span class="line">[HKEY_CURRENT_USER<span class="string">\Software\Wine]</span></span><br><span class="line"><span class="string">"Version"</span>=<span class="string">"win5"</span></span><br><span class="line">[HKEY_LOCAL_MACHINE<span class="string">\Software\Microsoft\Windows</span> NT<span class="string">\CurrentVersion\FontSubstitutes]</span></span><br><span class="line"><span class="string">"Tahoma"</span>=<span class="string">"SimSun"</span></span><br><span class="line">[HKEY_LOCAL_MACHINE<span class="string">\Software\Microsoft\Windows</span> NT<span class="string">\CurrentVersion\FontLink\SystemLink]</span></span><br><span class="line"><span class="string">"Lucida Sans Unicode"</span>=<span class="string">"simsun.ttc,simsun"</span></span><br><span class="line"><span class="string">"Microsoft Sans Serif"</span>=<span class="string">"simsun.ttc,simsun"</span></span><br><span class="line"><span class="string">"SimSun"</span>=<span class="string">"simsun.ttc,simsun"</span></span><br><span class="line"><span class="string">"Tahoma"</span>=<span class="string">"simsun.ttc,simsun"</span></span><br><span class="line">[HKEY_CURRENT_USER<span class="string">\Control</span> Panel<span class="string">\Desktop]</span></span><br><span class="line"><span class="string">"FontSmoothing"</span>=<span class="string">"2"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行 <code>regedit init.reg</code></p>
+</li>
+</ol>
+<p>9.在应用程序列表中找到 <code>Wine Configuration</code>，运行之。选择“函数库”选项卡，新添加oleaut32.dll函数库，使其原装先于内建。这可以解决运行RTX后列表中的中文名字显示不全的问题。</p>
+<p>ok ，现在你已经可以比较完美的运行RTX了。fedora的话在应用程序里就可以看到rtx的启动图标。</p>
+<p>注意，登录rtx后，你会发现一直处于离开状态。这时请在设置中将自动更改为离开状态的复选框去掉。</p>
+<p>在fedora下（事实上在大多数linux下都有这些问题），你还要注意一下问题。不要点击最大化按钮，一旦你点击了最大化按钮，你将无法恢复原状，除非关闭聊天窗口。不要试图查看历史消息。这会引起程序崩溃而退出。你可以点击聊天窗口的历史消息按钮来查看一小段时间内的聊天记录。还有，快捷键在全局下是不起作用的，只有在rtx的任意一个窗口获得焦点的时候，快捷键才起作用。</p>
+<p>希望这些对于大家能有所帮助。</p>
+
+      
+    </div>
+  
+    <footer class="article-footer">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+
+    </footer>
+  
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2011/10/27/c3p0-mysql/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          c3p0连接池连接mysql数据库超时问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2011/02/23/javascript-line1-error/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">关于JS错误：“行1，字符1”&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Puzzlex&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>

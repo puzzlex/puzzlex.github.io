@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Window下让git使用BCompare来比较与合并文件 - 永不岛</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="环境：Windows 7, git, cygwin
+近来工作从svn上逐渐切换git上工作。不喜欢使用eclipse的git插件，而window版本的git图形化又做的不怎么好，使用不太方便。所以回归命令行，用命令行的方式来使用git。但是比较文件的时候命令行方式很不习惯，于是琢磨怎么把Git和我经常用的比较工具BCompare结合起来。
+我使用Git的环境是Cygwin。Cygwin是windo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Window下让git使用BCompare来比较与合并文件">
+<meta property="og:url" content="http://puzzlex.github.io/2013/10/17/windows-git-bcompare/index.html">
+<meta property="og:site_name" content="永不岛">
+<meta property="og:description" content="环境：Windows 7, git, cygwin
+近来工作从svn上逐渐切换git上工作。不喜欢使用eclipse的git插件，而window版本的git图形化又做的不怎么好，使用不太方便。所以回归命令行，用命令行的方式来使用git。但是比较文件的时候命令行方式很不习惯，于是琢磨怎么把Git和我经常用的比较工具BCompare结合起来。
+我使用Git的环境是Cygwin。Cygwin是windo">
+<meta property="og:updated_time" content="2015-10-10T10:13:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Window下让git使用BCompare来比较与合并文件">
+<meta name="twitter:description" content="环境：Windows 7, git, cygwin
+近来工作从svn上逐渐切换git上工作。不喜欢使用eclipse的git插件，而window版本的git图形化又做的不怎么好，使用不太方便。所以回归命令行，用命令行的方式来使用git。但是比较文件的时候命令行方式很不习惯，于是琢磨怎么把Git和我经常用的比较工具BCompare结合起来。
+我使用Git的环境是Cygwin。Cygwin是windo">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">存档</a>
+        
+          <a class="main-nav-link" href="/tags">标签</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://puzzlex.github.io"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-windows-git-bcompare" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Window下让git使用BCompare来比较与合并文件
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2013/10/17/windows-git-bcompare/" class="article-date">
+  <time datetime="2013-10-16T16:00:00.000Z" itemprop="datePublished">2013-10-17</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>环境：Windows 7, git, cygwin</p>
+<p>近来工作从svn上逐渐切换git上工作。不喜欢使用eclipse的git插件，而window版本的git图形化又做的不怎么好，使用不太方便。所以回归命令行，用命令行的方式来使用git。但是比较文件的时候命令行方式很不习惯，于是琢磨怎么把Git和我经常用的比较工具BCompare结合起来。</p>
+<p>我使用Git的环境是Cygwin。Cygwin是windows下一个著名的可以让你使用linux命令的软件。相比windows弱爆了的命令行，强大之处无需多说。<br><a id="more"></a><br>首先查看git是否可以调用外部工具来比较文件，搜索网络，找到了这个页面：<a href="http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.1-%E9%85%8D%E7%BD%AE-Git" target="_blank" rel="external">http://git.oschina.net/progit/7-%E8%87%AA%E5%AE%9A%E4%B9%89-Git.html#7.1-%E9%85%8D%E7%BD%AE-Git</a>。这个页面详细的解释了如何配置外部工具来实现diff命令。然后按照该页面的方法来实现，其中包装脚本如下（我的BCompare安装在D:/Program Files/BCompare）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh</span></span><br><span class="line">[ <span class="variable">$#</span> <span class="operator">-eq</span> <span class="number">7</span> ] &amp;&amp; /cygdrive/d/Program\ Files/BCompare/BCompare <span class="string">"<span class="variable">$2</span>"</span> <span class="string">"<span class="variable">$5</span>"</span></span><br></pre></td></tr></table></figure></p>
+<p>然后尝试 <code>git diff</code> 命令，BCompare确实启动了，但是只打开了工作目录文件，没有打开历史文件。查找原因，首先看是否正确的传递的两个参数，在脚本中增加输出两个参数的语句，得到的两个参数的值如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/tmp/<span class="number">1</span>dT3xW_AppCacheService.java</span><br><span class="line">src/main/java/com/xxx/videos/daily/service/AppCacheService.java</span><br></pre></td></tr></table></figure></p>
+<p>当看到这两个路径的时候我就意识到了问题出在哪里。显然是因为第一个是Cygwin环境下的绝对路径，所以才导致BCompare找不到指定的文件无法打开。修改包装脚本为如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh</span></span><br><span class="line"><span class="comment">#这里赋值为cygwin的安装位置</span></span><br><span class="line">cygwin=<span class="string">"C:/cygwin/"</span></span><br><span class="line">oldfile=<span class="variable">$2</span></span><br><span class="line">newfile=<span class="variable">$5</span></span><br><span class="line"><span class="comment">#以下的这两个判断，主要是用来解决git diff命令传递的临时文件路径是以linux方式传递的，我们需要在这里转换为windows中对应的位置，这样BCompare才能正确的找到文件，这里也是主要与上述文章配置不同的地方</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$&#123;oldfile:0:1&#125;</span> = <span class="string">"/"</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">oldfile=<span class="string">"C:/cygwin/"</span><span class="variable">$oldfile</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$&#123;newfile:0:1&#125;</span> = <span class="string">"/"</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">newfile=<span class="string">"C:/cygwin/"</span><span class="variable">$newfile</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment">#这里替换为你的BCompare安装路径。其中/cygdrive/d代表D盘，其他类似</span></span><br><span class="line">/cygdrive/d/Program\  Files/BCompare/BCompare <span class="string">"<span class="variable">$oldfile</span>"</span> <span class="string">"<span class="variable">$newfile</span>"</span></span><br><span class="line"><span class="comment">#这一句保证在只运行git diff命令时，可以依次弹出窗口来比对所有文件。如果没有这一句，将会只比对diff列表的第一个文件然后脚本退出</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"diffed "</span><span class="variable">$newfile</span></span><br></pre></td></tr></table></figure></p>
+<p>然后再次尝试 <code>git diff</code> 命令，Yes! BCompare成功启动，而且打开了需要比较的两个文件。</p>
+
+      
+    </div>
+  
+    <footer class="article-footer">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cygwin/">cygwin</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+    </footer>
+  
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2012/03/21/old-linux-jdk-install/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">在旧版本Linux上安装jdk&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Puzzlex&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>

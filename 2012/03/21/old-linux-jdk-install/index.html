@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>在旧版本Linux上安装jdk - 永不岛</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="系统版本：Red Hat Enterprise Linux AS release 4
+Linux内核：2.6.9-89.ELlargesmp
+今天需要在服务器上跑一段java程序，在本地将程序打名为count.jar的可执行包以后上传到服务器上。然后用 java -jar  count.jar运行之，结果竟然出现错误，错误的大致意思是不支持 -jar 参数。我去，这是什么版本的java啊，竟然不支">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在旧版本Linux上安装jdk">
+<meta property="og:url" content="http://puzzlex.github.io/2012/03/21/old-linux-jdk-install/index.html">
+<meta property="og:site_name" content="永不岛">
+<meta property="og:description" content="系统版本：Red Hat Enterprise Linux AS release 4
+Linux内核：2.6.9-89.ELlargesmp
+今天需要在服务器上跑一段java程序，在本地将程序打名为count.jar的可执行包以后上传到服务器上。然后用 java -jar  count.jar运行之，结果竟然出现错误，错误的大致意思是不支持 -jar 参数。我去，这是什么版本的java啊，竟然不支">
+<meta property="og:updated_time" content="2015-10-10T10:13:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在旧版本Linux上安装jdk">
+<meta name="twitter:description" content="系统版本：Red Hat Enterprise Linux AS release 4
+Linux内核：2.6.9-89.ELlargesmp
+今天需要在服务器上跑一段java程序，在本地将程序打名为count.jar的可执行包以后上传到服务器上。然后用 java -jar  count.jar运行之，结果竟然出现错误，错误的大致意思是不支持 -jar 参数。我去，这是什么版本的java啊，竟然不支">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">存档</a>
+        
+          <a class="main-nav-link" href="/tags">标签</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://puzzlex.github.io"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-old-linux-jdk-install" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      在旧版本Linux上安装jdk
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2012/03/21/old-linux-jdk-install/" class="article-date">
+  <time datetime="2012-03-20T16:00:00.000Z" itemprop="datePublished">2012-03-21</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>系统版本：Red Hat Enterprise Linux AS release 4</p>
+<p><strong>Linux内核</strong>：2.6.9-89.ELlargesmp</p>
+<p>今天需要在服务器上跑一段java程序，在本地将程序打名为count.jar的可执行包以后上传到服务器上。然后用 java -jar  count.jar运行之，结果竟然出现错误，错误的大致意思是不支持 -jar 参数。我去，这是什么版本的java啊，竟然不支持运行jar。运行 java  -version 查之，得到版本是1.4….1.4…好古老的版本。为了我的程序大计，决定将其升级。</p>
+<ol>
+<li><p>运行 <strong>sudo rpm -qa |grep java</strong> 得到系统安装了  java-1.4.2-gcj-compat-1.4.2.0-27jpp 和 gcc-java-3.4.6-11。第一个是我们要卸载的java包。</p>
+</li>
+<li><p>运行 <strong>sudo rpm -e java-1.4.2-gcj-compat-1.4.2.0-27jpp</strong> 卸载系统<a id="more"></a>自带软件包。</p>
+</li>
+<li><p>去Java官网下载 jdk-7u3-linux-x64.rpm 并上传至服务器。</p>
+</li>
+<li><p>运行 <strong>sudo rpm -i jdk-7u3-linux-x64.rpm</strong> 命令安装jdk1.7。结果出错，错误信息显示为：/lib64/tls/libc.so.6: version `GLIBC_2.4’ not found  (required by /usr/java/jdk1.7.0_03/bin/unpack200)。看来可能是glibc的版本不够高，利用 sudo rpm  -qa |grep glibc  命令查询之，得知系统安装的是2.3版本。由于glibc是一个底层的lib库，许多软件都依赖于词库，所以不建议直接升级该库。我选择了安装旧版本的java。</p>
+</li>
+<li><p>去<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk-6u31-download-1501634.html" target="_blank" rel="external">java官网</a>下载  jdk-6u31-linux-x64-rpm.bin ，传至服务器。</p>
+</li>
+<li><p>运行<strong> sudo chmod +x jdk-6u31-linux-x64-rpm.bin</strong> 使其变为可运行程序。</p>
+</li>
+<li><p>运行 <strong>sudo ./jdk-6u31-linux-x64-rpm.bin </strong>命令安装jdk1.6。结果出错，错误提示为：package  jdk-1.7.0_03-fcs (which is newer than jdk-1.6.0_31-fcs) is already installed          file /etc/init.d/jexec from install of jdk-1.6.0_31-fcs conflicts with  file from package  jdk-1.7.0_03-fcs。看来虽然刚才1.7没有安装成功，但是已经有些文件释放到了系统中，导致1.6版本未安装成功。</p>
+</li>
+<li><p>依据上边的错误分析，jdk1.7的包名应该是jdk-1.7.0_03-fcs（利用rpm -qa 命令查不到该软件包）。运行 <strong>sudo rpm  -e jdk-1.7.0_03-fcs </strong>命令删除jdk1.7的残余文件。</p>
+</li>
+<li><p>再次运行 <strong>sudo ./jdk-6u31-linux-x64-rpm.bin</strong> 命令。这次安装成功。</p>
+</li>
+</ol>
+<p>分析整个过程，有以下要点要注意：</p>
+<ol>
+<li><p>注意安装过程中的提示信息。</p>
+</li>
+<li><p>一般报告需要什么的错误都是由于某些lib包版本过旧导致的，这时候一般的选择是升级依赖包或者选择旧版本。</p>
+</li>
+</ol>
+<p>上边的过程在centOS上也通过了测试是可以的。所谓的以rpm.bin结尾的包名，一般是可执行文件，运行之，会自动释放rpm包并安装，安装目录为/usr/java/，并且环境变量已经配置好了，无需再去配置/etc/profile。一般Linux发行版本中安装的jdk都是OpenJDK，版本一般都比较陈旧。</p>
+
+      
+    </div>
+  
+    <footer class="article-footer">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+
+    </footer>
+  
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/10/17/windows-git-bcompare/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          Window下让git使用BCompare来比较与合并文件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2012/03/16/linux-mysql-php-install/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux下rpm方式安装mysql时php5的编译&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Puzzlex&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>

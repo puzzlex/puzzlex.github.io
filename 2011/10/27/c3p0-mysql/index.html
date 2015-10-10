@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>c3p0连接池连接mysql数据库超时问题 - 永不岛</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="项目环境：java, struts 2, c3p0, mysql
+现象：在通过c3p0的连接池访问mysql数据库时，第一次访问页面没错误。但是稍等一段时间在刷新页面后台就会报错。错误详细信息如下：1The last packet successfully received from the server was 52,140 milliseconds ago. The last packet s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c3p0连接池连接mysql数据库超时问题">
+<meta property="og:url" content="http://puzzlex.github.io/2011/10/27/c3p0-mysql/index.html">
+<meta property="og:site_name" content="永不岛">
+<meta property="og:description" content="项目环境：java, struts 2, c3p0, mysql
+现象：在通过c3p0的连接池访问mysql数据库时，第一次访问页面没错误。但是稍等一段时间在刷新页面后台就会报错。错误详细信息如下：1The last packet successfully received from the server was 52,140 milliseconds ago. The last packet s">
+<meta property="og:updated_time" content="2015-10-10T10:12:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="c3p0连接池连接mysql数据库超时问题">
+<meta name="twitter:description" content="项目环境：java, struts 2, c3p0, mysql
+现象：在通过c3p0的连接池访问mysql数据库时，第一次访问页面没错误。但是稍等一段时间在刷新页面后台就会报错。错误详细信息如下：1The last packet successfully received from the server was 52,140 milliseconds ago. The last packet s">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">存档</a>
+        
+          <a class="main-nav-link" href="/tags">标签</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://puzzlex.github.io"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-c3p0-mysql" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      c3p0连接池连接mysql数据库超时问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2011/10/27/c3p0-mysql/" class="article-date">
+  <time datetime="2011-10-26T16:00:00.000Z" itemprop="datePublished">2011-10-27</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目环境：java, struts 2, c3p0, mysql</p>
+<p>现象：在通过c3p0的连接池访问mysql数据库时，第一次访问页面没错误。但是稍等一段时间在刷新页面后台就会报错。错误详细信息如下：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The <span class="keyword">last</span> packet successfully received <span class="built_in">from</span> <span class="operator">the</span> server was <span class="number">52</span>,<span class="number">140</span> <span class="built_in">milliseconds</span> ago. The <span class="keyword">last</span> packet sent successfully <span class="built_in">to</span> <span class="operator">the</span> server was <span class="number">0</span> <span class="built_in">milliseconds</span> ago.</span><br></pre></td></tr></table></figure></p>
+<p>查找网上，网上一大片说的都是8小时后mysql数据库链接失效的问题<a id="more"></a>。但是现在我这不属于这种情况，因为我间隔比较短的时间（两分钟）就会出现这个问题。我怀疑是由于数据库压力比较大，dba将连接时间设置过短所致。找了好久最后才找到解决方法。</p>
+<p>解决方法：在c3p0的数据库连接配置文件中新添加如下一行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">test</span>ConnectionOnCheckin = <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+<p>这项设置的作用是在从连结池中获取连结的时候检查连结是否有效。从此在也没有出现这个错误了，世界清静了。。。。</p>
+
+      
+    </div>
+  
+    <footer class="article-footer">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+    </footer>
+  
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2012/03/16/linux-mysql-php-install/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          Linux下rpm方式安装mysql时php5的编译
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2011/10/23/linux-wine-rtx/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">在linux下利用wine运行RTX&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Puzzlex&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>
