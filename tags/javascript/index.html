@@ -58,24 +58,19 @@
     </div>
     <div class="archives">
     
-      <article class="archive-article archive-type-post">
+      <article class="archive-article archive-type-<%= post.layout %>">
   <div class="archive-article-inner">
     <header class="archive-article-header">
-      
-        <a href="/2011/02/23/javascript-line1-error/" class="archive-article-date">
-  <time datetime="2011-02-22T16:00:00.000Z" itemprop="datePublished">2011 Feb 23</time>
-</a>
-      
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2011/02/23/javascript-line1-error/">关于JS错误：“行1，字符1”</a>
-    </h1>
-  
-
+      <% if(archive) { %>
+        <%- partial('post/date', {class_name: 'archive-article-date', date_format: 'MM-DD'}) %>
+      <% } else { %>
+        <%- partial('post/date', {class_name: 'archive-article-date', date_format: 'YYYY-MM-DD'}) %>
+      <% } %>
+      <%- partial('post/title', {class_name: 'archive-article-title'}) %>
     </header>
   </div>
 </article>
+
     
     </div></section>
     </section>
@@ -85,11 +80,14 @@
   <% } %>
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; <%= date(new Date(), 'YYYY') %> <%= config.author || config.title %>&nbsp;
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+      &copy; <%= date(new Date(), 'YYYY') %> <a href="/"><%= config.author || config.title %></a>&nbsp;
+      |&nbsp; <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank">自由转载-非商用-非衍生-保持署名</a> &nbsp;
+      |&nbsp; <a href="#">About me</a> &nbsp;|&nbsp;  
+      <script src="http://s95.cnzz.com/stat.php?id=1256568280&web_id=1256568280" language="JavaScript"></script>
     </div>
   </div>
 </footer>
+
     
 
 <script src="/js/jquery.min.js"></script>
