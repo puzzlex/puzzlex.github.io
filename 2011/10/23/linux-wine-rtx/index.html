@@ -154,10 +154,12 @@ tips：在fedora上安装wine很简单。只需要打开终端，输入wine然�
 
 </section>
     <footer id="footer">
-  
+  <% if (theme.sidebar === 'bottom'){ %>
+    <%- partial('_partial/sidebar') %>
+  <% } %>
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 Puzzlex&nbsp;
+      &copy; <%= date(new Date(), 'YYYY') %> <%= config.author || config.title %>&nbsp;
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
     </div>
   </div>
